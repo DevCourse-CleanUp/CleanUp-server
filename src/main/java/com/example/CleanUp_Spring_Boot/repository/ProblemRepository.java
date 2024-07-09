@@ -1,10 +1,9 @@
 package com.example.CleanUp_Spring_Boot.repository;
 
-import com.example.CleanUp_Spring_Boot.entity.Users;
+import com.example.CleanUp_Spring_Boot.entity.Problems;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<Users, Integer> {
-
+public interface ProblemRepository  extends JpaRepository<Problems, Integer> {
 }
