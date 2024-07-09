@@ -1,9 +1,6 @@
 package com.example.CleanUp_Spring_Boot.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -13,8 +10,20 @@ public class Problems {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
-    private String content;
     private String answer;
     private String level;
     private Integer score;
+
+    @Embedded
+    private Content content;
+
+    @Data
+    @Embeddable
+    public static class Content {
+        @Column(name = "description")
+        private String description;
+        @Column(name = "code")
+        private String code;
+    }
+
 }
