@@ -1,7 +1,7 @@
 package com.example.CleanUp_Spring_Boot.controller;
 
-import com.example.CleanUp_Spring_Boot.entity.Users;
-import com.example.CleanUp_Spring_Boot.service.UserService;
+import com.example.CleanUp_Spring_Boot.entity.Problems;
+import com.example.CleanUp_Spring_Boot.service.ProblemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,14 +10,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-public class userController {
+
+public class problemController {
     @Autowired
-    private UserService userService;
+    private ProblemService problemService;
 
 
-    @GetMapping("/login")
+    @GetMapping("/problemset")
     @ResponseBody
-    public List<Users> login(){
-        return userService.getUserApi();
+    public List<Problems> problemset() {
+        return problemService.getProblemApi();
     }
+
 }
