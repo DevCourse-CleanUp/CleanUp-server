@@ -1,11 +1,9 @@
 package com.example.CleanUp_Spring_Boot.service;
 
-import com.example.CleanUp_Spring_Boot.entity.User;
+import com.example.CleanUp_Spring_Boot.entity.Users;
 import com.example.CleanUp_Spring_Boot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserService {
@@ -13,8 +11,16 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> getUserApi(){
-        return userRepository.findAll();
+    public Users addNewUser(Users user){
+        return userRepository.save(user);
     }
+
+    public Boolean checkDuplication(String email, String nickname){
+        if(userRepository.findSameEmail(email) + userRepository.findSameNickname(nickname) > 0){
+            return true;
+        }
+        return false;
+    }
+
 
 }
