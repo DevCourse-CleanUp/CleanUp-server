@@ -5,7 +5,9 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Data
+@Setter
 @Getter
+@NoArgsConstructor
 @Entity
 public class Users {
    @Id
@@ -21,7 +23,11 @@ public class Users {
    @Column(unique = true)
    private String nickname;
 
-   @Column(name="total_score")
+   @Column(name = "total_score")
    private Integer totalScore = 0;
 
-}
+   public Users(String email, String password){
+      this.email = email;
+      this.password = password;
+   }
+   }
