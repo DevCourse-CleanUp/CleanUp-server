@@ -1,18 +1,10 @@
 package com.example.CleanUp_Spring_Boot.service;
 
-import com.example.CleanUp_Spring_Boot.auth.JwtUtil;
 import com.example.CleanUp_Spring_Boot.entity.Users;
 import com.example.CleanUp_Spring_Boot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserService {
@@ -46,4 +38,13 @@ public class UserService {
         }
         return false;
     }
+
+    public void calTotalScore(String email){
+        Integer userId = findUser(email).getId();
+        Integer newTotalScore = userRepository.calScore(userId);
+        System.out.println("2차 확인 계산된 점수 : " + newTotalScore);
+        userRepository.updateScore(newTotalScore, userId);
+    }
+
+
 }
