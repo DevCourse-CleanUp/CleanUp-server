@@ -1,13 +1,11 @@
 package com.example.CleanUp_Spring_Boot.auth;
 
-import com.example.CleanUp_Spring_Boot.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,8 +18,11 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
-//    private final UserService userService;
+
     private final String jwtSecretKey;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -37,7 +38,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String token = authorization.split(" ")[1];
 
-        if(JwtUtil.isExpired(token, jwtSecretKey)) {
+        if(jwtUtil.isExpired(token, jwtSecretKey)) {
             logger.error("Token이 만료되었습니다.");
             filterChain.doFilter(request, response);
             return;
