@@ -3,6 +3,7 @@ package com.example.CleanUp_Spring_Boot.configuration;
 import com.example.CleanUp_Spring_Boot.auth.JwtFilter;
 import com.example.CleanUp_Spring_Boot.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +22,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig{
 
-    private final UserService userService;
+    private static String jwtSecretKey;
 
     @Value("${jwtSecretKey}")
-    private String jwtSecretKey;
+    public void setJwtSecretKey(String jwtSecretKey){
+        this.jwtSecretKey = jwtSecretKey;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
@@ -33,7 +36,7 @@ public class SecurityConfig{
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> {
-                    requests.requestMatchers("/login", "/join").permitAll();
+                    requests.requestMatchers("/login", "/join", "/test").permitAll();
                     requests.requestMatchers(HttpMethod.POST, "/**").authenticated();
                     requests.requestMatchers(HttpMethod.GET, "/**").authenticated();
                     requests.requestMatchers(HttpMethod.PUT, "/**").authenticated();

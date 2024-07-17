@@ -21,7 +21,7 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     @Query("SELECT u FROM Users u WHERE u.email = :email")
     Users findLoginUser(@Param("email") String email);
 
-    @Query(value = "SELECT SUM(p.score) FROM Solves s LEFT JOIN Problems p ON s.problem_id = p.id WHERE s.user_id = :userId", nativeQuery = true)
+    @Query(value = "SELECT SUM(p.score) FROM solves s LEFT JOIN problems p ON s.problem_id = p.id WHERE s.user_id = :userId", nativeQuery = true)
     Integer calScore(@Param("userId") Integer userId);
 
     @Modifying
