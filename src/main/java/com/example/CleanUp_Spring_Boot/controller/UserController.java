@@ -72,4 +72,11 @@ public class UserController {
         System.out.println("최종 확인 Users에서 가져온 total_score: " + userService.findUser(userEmail).getTotalScore());
         return ResponseEntity.status(HttpStatus.OK).body("점수가 최신화되었습니다!");
     }
+
+    @ResponseBody
+    @GetMapping("/test")
+    public String test(){
+        System.out.println("여기 들어오니?");
+        return "good";
+    }
 }
