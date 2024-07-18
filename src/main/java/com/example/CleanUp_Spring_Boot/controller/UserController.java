@@ -12,6 +12,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -44,7 +45,7 @@ public class UserController {
                 // jwt 토큰 발행
                 String jwtToken = jwtUtil.createJwt(loginMap.get("email"));
                 HttpHeaders headers = new HttpHeaders();
-                headers.add("Authorization", "Bearer " + jwtToken);
+                headers.add("Authorization", jwtToken);
 
                 return new ResponseEntity<>("로그인에 성공하였습니다!", headers, HttpStatus.OK);
             }
@@ -57,6 +58,7 @@ public class UserController {
     }
 
     @ResponseBody
+    @CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
     @GetMapping("/user")
     public ResponseEntity user(@RequestHeader("Authorization") String jwt){
         String userEmail = jwtUtil.getEmailFromJwt(jwt);
@@ -65,18 +67,18 @@ public class UserController {
     }
 
     @PutMapping("/solves")
+    @CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "Authorization")
     public ResponseEntity updateTotalScore(@RequestHeader("Authorization") String jwt){
         String userEmail = jwtUtil.getEmailFromJwt(jwt);
-        System.out.println("1차 확인 이메일 : " + userEmail);
         userService.calTotalScore(userEmail);
-        System.out.println("최종 확인 Users에서 가져온 total_score: " + userService.findUser(userEmail).getTotalScore());
         return ResponseEntity.status(HttpStatus.OK).body("점수가 최신화되었습니다!");
     }
 
     @ResponseBody
-    @GetMapping("/test")
-    public String test(){
-        System.out.println("여기 들어오니?");
-        return "good";
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/")
+    public ResponseEntity ranking(){
+        List<Users> TOP3 = userService.checkTOP3();
+        return ResponseEntity.status(HttpStatus.OK).body(TOP3);
     }
 }

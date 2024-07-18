@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -15,6 +17,9 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public List<Users> checkTOP3(){
+        return userRepository.findTOP3();
+    }
 
     public Users addNewUser(Users user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -41,8 +46,10 @@ public class UserService {
 
     public void calTotalScore(String email){
         Integer userId = findUser(email).getId();
-        Integer newTotalScore = userRepository.calScore(userId);
-        System.out.println("2차 확인 계산된 점수 : " + newTotalScore);
+        Integer newTotalScore = 0;
+        if(userRepository.calScore(userId)!= null){
+            newTotalScore = userRepository.calScore(userId);
+        }
         userRepository.updateScore(newTotalScore, userId);
     }
 

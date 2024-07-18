@@ -24,10 +24,5 @@ public class Users {
    private String nickname;
 
    @Column(name = "total_score")
-   private Integer totalScore = 0;
-
-   public Users(String email, String password){
-      this.email = email;
-      this.password = password;
-   }
-   }
+   private Integer total_score = 0;
+}

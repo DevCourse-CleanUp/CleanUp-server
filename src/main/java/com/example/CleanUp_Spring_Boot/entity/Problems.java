@@ -13,17 +13,5 @@ public class Problems {
     private String answer;
     private String level;
     private Integer score;
-
-    @Embedded
-    private Content content;
-
-    @Data
-    @Embeddable
-    public static class Content {
-        @Column(name = "description")
-        private String description;
-        @Column(name = "code")
-        private String code;
-    }
-
+    private String  description;
 }
