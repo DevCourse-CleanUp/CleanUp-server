@@ -16,6 +16,6 @@ public interface ProblemRepository extends JpaRepository<Problems, Integer> {
     @Query("SELECT p.id as id, p.title as title, p.level as level, p.score as score FROM Problems p")
     List<ProblemProjection> findAllProjectedBy();
 
-    @Query("SELECT p.id as id, p.title as title, p.level as level, p.score as score, p.answer as answer, p.content as content FROM Problems p WHERE p.id = :id")
+    @Query("SELECT p.title as title, p.answer as answer, p.description as description, p.score as score  FROM Problems p WHERE p.id = :id")
     Optional<ProblemDetailProjection> findProjectedById(@Param("id") Integer id);
 }

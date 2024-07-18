@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,16 +30,14 @@ public class JwtFilter extends OncePerRequestFilter{
 
         logger.info("authorization = " + authorization);
 
-        if(authorization == null || !authorization.startsWith("Bearer ")){
+        if(authorization == null){
             logger.error("authorization 이 없습니다.");
             filterChain.doFilter(request, response);
             return;
         }
 
         String token = authorization.split(" ")[1];
-        System.out.println("시크릿 키 null임?" + jwtSecretKey);
         if(jwtUtil.isExpired(token, jwtSecretKey)) {
-            logger.info("111222");
             logger.error("Token이 만료되었습니다.");
             filterChain.doFilter(request, response);
             return;

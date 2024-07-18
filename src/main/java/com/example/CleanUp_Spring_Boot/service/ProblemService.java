@@ -4,7 +4,6 @@ import com.example.CleanUp_Spring_Boot.entity.ProblemDetailProjection;
 import com.example.CleanUp_Spring_Boot.entity.ProblemProjection;
 import com.example.CleanUp_Spring_Boot.repository.ProblemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ProblemDetail;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

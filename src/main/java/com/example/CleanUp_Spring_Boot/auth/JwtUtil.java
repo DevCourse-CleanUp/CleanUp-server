@@ -1,6 +1,5 @@
 package com.example.CleanUp_Spring_Boot.auth;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,7 +32,7 @@ public class JwtUtil {
     }
 
     public static boolean isExpired(String token, String jwtSecretKey){
-        System.out.println("토큰 만료 유무 검사");
+        System.out.println("토큰 만료 유무 검사 시작");
         return Jwts.parser().setSigningKey(jwtSecretKey).parseClaimsJws(token)
                 .getBody().getExpiration().before(new Date());
     }

@@ -12,6 +12,9 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<Users, Integer> {
+    @Query("SELECT u FROM Users u ORDER BY u.total_score DESC LIMIT 3")
+    List<Users> findTOP3();
+
     @Query("SELECT COUNT(u.email) FROM Users u WHERE u.email = :email")
     Integer findSameEmail(@Param("email") String email);
 
